@@ -17,7 +17,7 @@ class DatabaseSeeder extends Seeder
     {
         $_user = new \App\Models\User;
         $_user->name = 'Administrador';
-        $_user->email = 'andmin@admin.com';
+        $_user->email = 'admin@admin.com';
         $_user->email_verified_at = now();
         $_user->password = Hash::make('59xNLVO0');
 
