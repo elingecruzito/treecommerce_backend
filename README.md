@@ -1,4 +1,4 @@
-## Commands installing AdminLTE
+## Commands used for install AdminLTE
 
 - composer require jeroennoten/laravel-adminlte
 - php artisan adminlte:install

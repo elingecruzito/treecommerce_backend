@@ -23,6 +23,20 @@ class DatabaseSeeder extends Seeder
 
         $_user->save();
 
+        \App\Models\User::factory()->count(19)->create();
+
+        \App\Models\Categories::factory()->count(20)->create();
+        \App\Models\Status::factory()->count(20)->create();
+        \App\Models\Products::factory()->count(100)->create();
+        \App\Models\Providers::factory()->count(20)->create();
+        \App\Models\Valorations::factory()->count(1000)->create();
+        \App\Models\Sales::factory()->count(50)->create();
+        \App\Models\RelationSales::factory()->count(1000)->create();
+        /** 
+        * $this->call([
+        *     CategoriesSeeder::class,
+        * ]);
+        */
 
     }
 }
