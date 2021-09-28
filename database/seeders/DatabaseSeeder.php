@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
         $_user->name = 'Administrador';
         $_user->email = 'admin@admin.com';
         $_user->email_verified_at = now();
+        $_user->remember_token = Str::random(20);
         $_user->password = Hash::make('59xNLVO0');
 
         $_user->save();

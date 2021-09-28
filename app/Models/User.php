@@ -30,7 +30,10 @@ class User extends Authenticatable
      */
     protected $hidden = [
         'password',
-        'remember_token',
+        // 'remember_token',
+        'email_verified_at',
+        'created_at',
+        'updated_at'
     ];
 
     /**
@@ -45,7 +48,6 @@ class User extends Authenticatable
     public static function getDataAuthenticate($auth){
 
         return User::where('email', $auth['email'])
-                // ->where('password', $auth['password']) )
-                ->get();
+                ->first();
     }
 }
