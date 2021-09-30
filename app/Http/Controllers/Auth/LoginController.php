@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use App\Models\Codes;
 
 class LoginController extends Controller
 {
@@ -53,11 +54,19 @@ class LoginController extends Controller
         ]);
 
         if (Auth::attempt($credentials)) {
-            return User::getDataAuthenticate($credentials);
+
+            $_user = User::getDataAuthenticate($credentials);
+
+            return [
+              'code' => Codes::CODE_OK,
+              'message' => Codes::MESSAGE_OK,
+              'body' => $_user
+            ];
         }
 
         return [
-            'error' => 'The provided credentials do not match our records.',
+            'code' => Codes::CODE_NOT_FOUND ,
+            'message' => Codes::MESSAGE_NOT_FOUND,
         ];
     }
 }
