@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Codes;
 use App\Models\LastView;
+use App\Models\Offers;
 
 class HomeController extends Controller
 {
@@ -43,19 +44,35 @@ class HomeController extends Controller
       if ( $request->validate(['token' => ['required']]) ){ // Si el valor token es requerido
         $data = LastView::getLast($request['token']); // Se ejecuta la consulta
         if( $data != null ){ // Si se obtienen valores
-          return [
+          return [ //Retorna los valores obtenidos
             'code' => Codes::CODE_OK,
             'message' => Codes::MESSAGE_OK,
             'body' => $data
           ];
-
         }
       }
-      //En caso de no optener valores 
+      //En caso de no optener valores
       return [
           'code' => Codes::CODE_NOT_FOUND ,
           'message' => Codes::MESSAGE_NOT_FOUND,
       ];
+    }
 
+    public function offers(Request $request){
+      if ( $request->validate(['token' => ['required']]) ){ // Si el valor token es requerido
+        $data = Offers::getLastOffers($request['token']); // Se ejecuta la consulta
+        if( $data != null ){ // Si se obtienen valores
+          return [ //Retorna los valores obtenidos
+            'code' => Codes::CODE_OK,
+            'message' => Codes::MESSAGE_OK,
+            'body' => $data
+          ];
+        }
+      }
+      //En caso de no optener valores
+      return [
+          'code' => Codes::CODE_NOT_FOUND ,
+          'message' => Codes::MESSAGE_NOT_FOUND,
+      ];
     }
 }
