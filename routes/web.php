@@ -28,3 +28,4 @@ Route::get('/home/carrucel', [App\Http\Controllers\Backend\HomeController::class
 Route::post('/home/lastView', [App\Http\Controllers\Backend\HomeController::class, 'lastView']);
 Route::post('/home/offers', [App\Http\Controllers\Backend\HomeController::class, 'offers']);
 Route::post('/home/inspirated', [App\Http\Controllers\Backend\HomeController::class, 'inspirated']);
+Route::post('/home/history', [App\Http\Controllers\Backend\HomeController::class, 'history']);
