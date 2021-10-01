@@ -17,11 +17,12 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
-// Auth::routes();
+Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-
+//---------------------------------------------------------------------------------------------------------------------
 Route::post('/login/authenticate', [App\Http\Controllers\Auth\LoginController::class, 'authenticate']);
 
-Route::post('/login/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout']);
+Route::get('/home/carrucel', [App\Http\Controllers\Backend\HomeController::class, 'carrucel']);
+Route::post('/home/lastView', [App\Http\Controllers\Backend\HomeController::class, 'lastView']);

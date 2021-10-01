@@ -10,7 +10,7 @@ class DatabaseSeeder extends Seeder
 {
     /**
      * Seed the application's database.
-     * 
+     *
      * php artisan make:migration create_directions_table && php artisan make:model Directions -f
      *
      * @return void
@@ -36,7 +36,9 @@ class DatabaseSeeder extends Seeder
         \App\Models\Sales::factory()->count(50)->create();
         \App\Models\RelationSales::factory()->count(1000)->create();
         \App\Models\Directions::factory()->count(999)->create();
-        /** 
+        \App\Models\LastView::factory()->count(999)->create();
+        \App\Models\Offers::factory()->count(999)->create();
+        /**
         * $this->call([
         *     CategoriesSeeder::class,
         * ]);

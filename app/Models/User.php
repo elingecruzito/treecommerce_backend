@@ -50,4 +50,17 @@ class User extends Authenticatable
         return User::where('email', $auth['email'])
                 ->first();
     }
+
+    public static function getAuthenticateToken($token){
+
+      if ( User::where("remember_token", $token)->count() > 0){
+        return true;
+      }
+      return false;
+
+    }
+
+    public static function getDataByToken($token){
+      return User::where("remember_token", $token)->first();
+    }
 }
