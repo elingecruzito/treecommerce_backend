@@ -75,4 +75,22 @@ class HomeController extends Controller
           'message' => Codes::MESSAGE_NOT_FOUND,
       ];
     }
+
+    public function inspirated(Request $request){
+      if ( $request->validate(['token' => ['required']]) ){ // Si el valor token es requerido
+        $data = LastView::inspirated($request['token']); // Se ejecuta la consulta
+        if( $data != null ){ // Si se obtienen valores
+          return [ //Retorna los valores obtenidos
+            'code' => Codes::CODE_OK,
+            'message' => Codes::MESSAGE_OK,
+            'body' => $data
+          ];
+        }
+      }
+      //En caso de no optener valores
+      return [
+          'code' => Codes::CODE_NOT_FOUND ,
+          'message' => Codes::MESSAGE_NOT_FOUND,
+      ];
+    }
 }

@@ -27,3 +27,4 @@ Route::post('/login/authenticate', [App\Http\Controllers\Auth\LoginController::c
 Route::get('/home/carrucel', [App\Http\Controllers\Backend\HomeController::class, 'carrucel']);
 Route::post('/home/lastView', [App\Http\Controllers\Backend\HomeController::class, 'lastView']);
 Route::post('/home/offers', [App\Http\Controllers\Backend\HomeController::class, 'offers']);
+Route::post('/home/inspirated', [App\Http\Controllers\Backend\HomeController::class, 'inspirated']);
