@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Codes;
 use App\Models\LastView;
 use App\Models\Offers;
+use App\Models\Products;
 
 class HomeController extends Controller
 {
@@ -78,7 +79,7 @@ class HomeController extends Controller
 
     public function inspirated(Request $request){
       if ( $request->validate(['token' => ['required']]) ){ // Si el valor token es requerido
-        $data = LastView::inspirated($request['token']); // Se ejecuta la consulta
+        $data = Products::inspirated($request['token']); // Se ejecuta la consulta
         if( $data != null ){ // Si se obtienen valores
           return [ //Retorna los valores obtenidos
             'code' => Codes::CODE_OK,

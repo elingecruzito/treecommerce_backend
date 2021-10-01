@@ -19,7 +19,7 @@ class CreateProductsTable extends Migration
             $table->integer('price');
             $table->text('description');
             $table->integer('unity');
-            $table->integer('onsale');
+            // $table->integer('onsale');
             $table->integer('id_provider');
             $table->integer('id_category');
             $table->timestamps();

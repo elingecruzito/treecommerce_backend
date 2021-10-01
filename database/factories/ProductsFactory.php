@@ -28,7 +28,7 @@ class ProductsFactory extends Factory
             'price' => $this->faker->numberBetween(100, 9999) ,
             'description' => $this->faker->paragraph() ,
             'unity' => $this->faker->numberBetween(1, 100) ,
-            'onsale' => $this->faker->numberBetween(1, 100),
+            // 'onsale' => $this->faker->numberBetween(1, 100),
             'id_provider' => $this->faker->numberBetween(1,20),
             'id_category' => $this->faker->numberBetween(1,20),
             'deleted' => 0,
