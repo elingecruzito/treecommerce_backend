@@ -31,10 +31,20 @@ class Products extends Model
                           $join->on('products.id', '=', 'valorations.id_product')
                           ->where('valorations.deleted', Utils::VALUE_ACTIVED);
                         })
+                        ->join('categories', function ($join) {
+                          $join->on('categories.id', '=', 'products.id_category');
+                        })
                         ->groupBy('valorations.id_product')
                         ->orderByRaw('AVG(tree_valorations.`starts`) DESC')
                         ->limit(3)
-                        ->select('products.id', 'products.name', 'products.price', 'products.description')
+                        ->select(
+                          'products.id',
+                          'products.name',
+                          'products.price',
+                          'products.description',
+                          'products.unity',
+                          'categories.category'
+                        )
                         ->get();
 
       }

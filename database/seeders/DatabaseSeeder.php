@@ -21,7 +21,7 @@ class DatabaseSeeder extends Seeder
         $_user->name = 'Administrador';
         $_user->email = 'admin@admin.com';
         $_user->email_verified_at = now();
-        $_user->remember_token = Str::random(20);
+        $_user->remember_token = 'OzHxUoOd9OlBWFEpp4cw';
         $_user->password = Hash::make('59xNLVO0');
 
         $_user->save();
@@ -31,6 +31,7 @@ class DatabaseSeeder extends Seeder
         \App\Models\Categories::factory()->count(20)->create();
         \App\Models\Status::factory()->count(20)->create();
         \App\Models\Products::factory()->count(100)->create();
+        \App\Models\Galery::factory()->count(1000)->create();
         \App\Models\Providers::factory()->count(20)->create();
         \App\Models\Valorations::factory()->count(1000)->create();
         \App\Models\Sales::factory()->count(50)->create();

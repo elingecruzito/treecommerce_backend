@@ -29,3 +29,5 @@ Route::post('/home/lastView', [App\Http\Controllers\Backend\HomeController::clas
 Route::post('/home/offers', [App\Http\Controllers\Backend\HomeController::class, 'offers']);
 Route::post('/home/inspirated', [App\Http\Controllers\Backend\HomeController::class, 'inspirated']);
 Route::post('/home/history', [App\Http\Controllers\Backend\HomeController::class, 'history']);
+
+Route::post('/galery', [App\Http\Controllers\Backend\GaleryController::class, 'galery']);

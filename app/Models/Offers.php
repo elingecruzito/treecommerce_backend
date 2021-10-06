@@ -22,8 +22,23 @@ class Offers extends Model
 
         $dataUser = User::getDataByToken($token); //Se obtienen los datos del token
 
-        return Offers::where('deleted', Utils::VALUE_ACTIVED)
-                      ->orderByRaw('created_at DESC')
+        return Offers::where('offers.deleted', Utils::VALUE_ACTIVED)
+                      ->orderByRaw('tree_offers.created_at DESC')
+                      ->join('products', function ($join) {
+                        $join->on('products.id', '=', 'offers.id_product')
+                        ->where('products.deleted', Utils::VALUE_ACTIVED);
+                      })
+                      ->join('categories', function ($join) {
+                        $join->on('categories.id', '=', 'products.id_category');
+                      })
+                      ->select(
+                        'products.id',
+                        'products.name',
+                        'products.price',
+                        'products.description',
+                        'products.unity',
+                        'categories.category'
+                      )
                       ->limit(3)
                       ->get();
 

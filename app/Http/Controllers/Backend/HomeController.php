@@ -8,6 +8,7 @@ use App\Models\Codes;
 use App\Models\LastView;
 use App\Models\Offers;
 use App\Models\Products;
+use App\Models\Galery;
 
 class HomeController extends Controller
 {

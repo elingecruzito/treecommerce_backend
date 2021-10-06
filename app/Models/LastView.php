@@ -32,6 +32,18 @@ class LastView extends Model
                               $join->on('products.id', '=', 'last_views.id_product')
                               ->where('products.deleted', Utils::VALUE_ACTIVED);
                             })
+                            ->join('categories', function ($join) {
+                              $join->on('categories.id', '=', 'products.id_category');
+                            })
+                            ->select(
+                              'products.id',
+                              'products.name',
+                              'products.price',
+                              'products.description',
+                              'products.unity',
+                              'categories.category',
+                              'products.id_category'
+                            )
                             ->first();
 
       }
@@ -53,7 +65,18 @@ class LastView extends Model
                               $join->on('products.id', '=', 'last_views.id_product')
                               ->where('products.deleted', Utils::VALUE_ACTIVED);
                             })
+                            ->join('categories', function ($join) {
+                              $join->on('categories.id', '=', 'products.id_category');
+                            })
                             ->limit(3)
+                            ->select(
+                              'products.id',
+                              'products.name',
+                              'products.price',
+                              'products.description',
+                              'products.unity',
+                              'categories.category'
+                            )
                             ->get();
 
       }
