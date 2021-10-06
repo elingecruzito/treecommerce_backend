@@ -39,6 +39,7 @@ class DatabaseSeeder extends Seeder
         \App\Models\Directions::factory()->count(999)->create();
         \App\Models\LastView::factory()->count(999)->create();
         \App\Models\Offers::factory()->count(999)->create();
+        \App\Models\Favorites::factory()->count(999)->create();
         /**
         * $this->call([
         *     CategoriesSeeder::class,

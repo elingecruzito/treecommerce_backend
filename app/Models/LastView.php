@@ -26,7 +26,7 @@ class LastView extends Model
         $dataUser = User::getDataByToken($token); //Se obtienen los datos del token
 
         //Se optiene el ultimo producto visto
-        return LastView::where(['id_user' => $dataUser->id, 'last_views.deleted' => Utils::VALUE_ACTIVED ])
+        return LastView::where(['last_views.id_user' => $dataUser->id, 'last_views.deleted' => Utils::VALUE_ACTIVED ])
                             ->orderByRaw('tree_last_views.created_at DESC')
                             ->join('products', function ($join) {
                               $join->on('products.id', '=', 'last_views.id_product')
