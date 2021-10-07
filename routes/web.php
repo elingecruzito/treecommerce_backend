@@ -39,5 +39,8 @@ Route::post('/watched/list', [App\Http\Controllers\Backend\WatchedController::cl
 
 //---------------------------------------------------------------------------------------------------------------------
 
+Route::post('/offers/list', [App\Http\Controllers\Backend\OffersController::class, 'list']);
+
+//---------------------------------------------------------------------------------------------------------------------
 
 Route::post('/galery', [App\Http\Controllers\Backend\GaleryController::class, 'galery']);

@@ -55,4 +55,42 @@ class Offers extends Model
 
       return null;
     }
+
+    public static function getListOffers($token){
+      if( User::getAuthenticateToken($token) ){ // Si el token es valido
+
+        $dataUser = User::getDataByToken($token); //Se obtienen los datos del token
+
+        return Offers::where('offers.deleted', Utils::VALUE_ACTIVED)
+                      ->orderByRaw('tree_offers.created_at DESC')
+                      ->join('products', function ($join) {
+                        $join->on('products.id', '=', 'offers.id_product')
+                        ->where('products.deleted', Utils::VALUE_ACTIVED);
+                      })
+                      ->join('categories', function ($join) {
+                        $join->on('categories.id', '=', 'products.id_category');
+                      })
+                      ->leftJoin('galery', function ($join) {
+                        $join->on('galery.id_product', '=', 'products.id')
+                        ->where('galery.deleted', Utils::VALUE_ACTIVED)
+                        ->orderByRaw('galery.created_at DESC');
+                      })
+                      ->select(
+                        'products.id',
+                        'products.name',
+                        'products.price',
+                        'products.description',
+                        'products.unity',
+                        'categories.category',
+                        'galery.path',
+                        // 'offers.percentage'
+                      )
+                      ->selectRaw('IF( tree_offers.percentage is null, 0, tree_offers.percentage) AS percentage')
+                      ->groupBy('offers.id_product')
+                      ->get();
+
+      }
+
+      return null;
+    }
 }
