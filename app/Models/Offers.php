@@ -44,8 +44,9 @@ class Offers extends Model
                         'products.unity',
                         'categories.category',
                         'galery.path',
-                        'offers.percentage'
+                        // 'offers.percentage'
                       )
+                      ->selectRaw('IF( tree_offers.percentage is null, 0, tree_offers.percentage) AS percentage')
                       ->groupBy('offers.id_product')
                       ->limit(3)
                       ->get();

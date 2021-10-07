@@ -53,9 +53,9 @@ class LastView extends Model
                               'products.unity',
                               'categories.category',
                               'products.id_category',
-                              'galery.path',
-                              'offers.percentage'
+                              'galery.path'
                             )
+                            ->selectRaw('IF( tree_offers.percentage is null, 0, tree_offers.percentage) AS percentage')
                             ->first();
 
       }
@@ -100,8 +100,9 @@ class LastView extends Model
                               'products.unity',
                               'categories.category',
                               'galery.path',
-                              'offers.percentage'
+                              // 'offers.percentage'
                             )
+                            ->selectRaw('IF( tree_offers.percentage is null, 0, tree_offers.percentage) AS percentage')
                             ->get();
 
       }
@@ -145,10 +146,11 @@ class LastView extends Model
                               'products.unity',
                               'categories.category',
                               'galery.path',
-                              'offers.percentage'
+                              // 'offers.percentage'
                               // 'favorites.id'
                             )
                             ->selectRaw('IF( COUNT(tree_favorites.id) > 0, true, false) AS favorite')
+                            ->selectRaw('IF( tree_offers.percentage is null, 0, tree_offers.percentage) AS percentage')
                             ->groupBy('last_views.id_product')
                             ->get();
       }
