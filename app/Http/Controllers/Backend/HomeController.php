@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Codes;
+use App\Models\Utils;
 use App\Models\LastView;
 use App\Models\Offers;
 use App\Models\Products;
@@ -46,71 +46,43 @@ class HomeController extends Controller
       if ( $request->validate(['token' => ['required']]) ){ // Si el valor token es requerido
         $data = LastView::getLast($request['token']); // Se ejecuta la consulta
         if( $data != null ){ // Si se obtienen valores
-          return [ //Retorna los valores obtenidos
-            'code' => Codes::CODE_OK,
-            'message' => Codes::MESSAGE_OK,
-            'body' => $data
-          ];
+          return Utils::success($data);
         }
       }
       //En caso de no optener valores
-      return [
-          'code' => Codes::CODE_NOT_FOUND ,
-          'message' => Codes::MESSAGE_NOT_FOUND,
-      ];
+      return Utils::fail();
     }
 
     public function offers(Request $request){
       if ( $request->validate(['token' => ['required']]) ){ // Si el valor token es requerido
         $data = Offers::getLastOffers($request['token']); // Se ejecuta la consulta
         if( $data != null ){ // Si se obtienen valores
-          return [ //Retorna los valores obtenidos
-            'code' => Codes::CODE_OK,
-            'message' => Codes::MESSAGE_OK,
-            'body' => $data
-          ];
+          return Utils::success($data);
         }
       }
       //En caso de no optener valores
-      return [
-          'code' => Codes::CODE_NOT_FOUND ,
-          'message' => Codes::MESSAGE_NOT_FOUND,
-      ];
+      return Utils::fail();
     }
 
     public function inspirated(Request $request){
       if ( $request->validate(['token' => ['required']]) ){ // Si el valor token es requerido
         $data = Products::inspirated($request['token']); // Se ejecuta la consulta
         if( $data != null ){ // Si se obtienen valores
-          return [ //Retorna los valores obtenidos
-            'code' => Codes::CODE_OK,
-            'message' => Codes::MESSAGE_OK,
-            'body' => $data
-          ];
+          return Utils::success($data);
         }
       }
       //En caso de no optener valores
-      return [
-          'code' => Codes::CODE_NOT_FOUND ,
-          'message' => Codes::MESSAGE_NOT_FOUND,
-      ];
+      return Utils::fail();
     }
 
     public function history(Request $request){
       if ( $request->validate(['token' => ['required']]) ){ // Si el valor token es requerido
         $data = LastView::shortHistory($request['token']); // Se ejecuta la consulta
         if( $data != null ){ // Si se obtienen valores
-          return [ //Retorna los valores obtenidos
-            'code' => Codes::CODE_OK,
-            'message' => Codes::MESSAGE_OK,
-            'body' => $data
-          ];
+          return Utils::success($data);
         }
       }
       //En caso de no optener valores
-      return [
-          'code' => Codes::CODE_NOT_FOUND ,
-          'message' => Codes::MESSAGE_NOT_FOUND,
-      ];
+      return Utils::fail();
     }
 }

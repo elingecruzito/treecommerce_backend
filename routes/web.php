@@ -22,12 +22,22 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 //---------------------------------------------------------------------------------------------------------------------
+
 Route::post('/login/authenticate', [App\Http\Controllers\Auth\LoginController::class, 'authenticate']);
+
+//---------------------------------------------------------------------------------------------------------------------
 
 Route::get('/home/carrucel', [App\Http\Controllers\Backend\HomeController::class, 'carrucel']);
 Route::post('/home/lastView', [App\Http\Controllers\Backend\HomeController::class, 'lastView']);
 Route::post('/home/offers', [App\Http\Controllers\Backend\HomeController::class, 'offers']);
 Route::post('/home/inspirated', [App\Http\Controllers\Backend\HomeController::class, 'inspirated']);
 Route::post('/home/history', [App\Http\Controllers\Backend\HomeController::class, 'history']);
+
+//---------------------------------------------------------------------------------------------------------------------
+
+Route::post('/watched/list', [App\Http\Controllers\Backend\WatchedController::class, 'completeList']);
+
+//---------------------------------------------------------------------------------------------------------------------
+
 
 Route::post('/galery', [App\Http\Controllers\Backend\GaleryController::class, 'galery']);
