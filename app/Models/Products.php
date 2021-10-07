@@ -34,6 +34,11 @@ class Products extends Model
                         ->join('categories', function ($join) {
                           $join->on('categories.id', '=', 'products.id_category');
                         })
+                        ->leftJoin('galery', function ($join) {
+                          $join->on('galery.id_product', '=', 'products.id')
+                          ->where('galery.deleted', Utils::VALUE_ACTIVED)
+                          ->orderByRaw('galery.created_at DESC');
+                        })
                         ->groupBy('valorations.id_product')
                         ->orderByRaw('AVG(tree_valorations.`starts`) DESC')
                         ->limit(3)
@@ -43,7 +48,8 @@ class Products extends Model
                           'products.price',
                           'products.description',
                           'products.unity',
-                          'categories.category'
+                          'categories.category',
+                          'galery.path'
                         )
                         ->get();
 

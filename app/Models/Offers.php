@@ -31,14 +31,21 @@ class Offers extends Model
                       ->join('categories', function ($join) {
                         $join->on('categories.id', '=', 'products.id_category');
                       })
+                      ->leftJoin('galery', function ($join) {
+                        $join->on('galery.id_product', '=', 'products.id')
+                        ->where('galery.deleted', Utils::VALUE_ACTIVED)
+                        ->orderByRaw('galery.created_at DESC');
+                      })
                       ->select(
                         'products.id',
                         'products.name',
                         'products.price',
                         'products.description',
                         'products.unity',
-                        'categories.category'
+                        'categories.category',
+                        'galery.path'
                       )
+                      ->groupBy('offers.id_product')
                       ->limit(3)
                       ->get();
 

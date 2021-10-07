@@ -16,6 +16,15 @@ class Utils {
     ];
   }
 
+  public static function successArray($data){
+    return [ //Retorna los valores obtenidos
+      'code' => Codes::CODE_OK,
+      'message' => Codes::MESSAGE_OK,
+      'length' => count($data),
+      'body' => $data
+    ];
+  }
+
   public static function fail(){
     return [
         'code' => Codes::CODE_NOT_FOUND ,
