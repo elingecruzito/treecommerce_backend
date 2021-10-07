@@ -43,4 +43,8 @@ Route::post('/offers/list', [App\Http\Controllers\Backend\OffersController::clas
 
 //---------------------------------------------------------------------------------------------------------------------
 
+Route::post('/inspirated/list', [App\Http\Controllers\Backend\InspiratedController::class, 'list']);
+
+//---------------------------------------------------------------------------------------------------------------------
+
 Route::post('/galery', [App\Http\Controllers\Backend\GaleryController::class, 'galery']);
