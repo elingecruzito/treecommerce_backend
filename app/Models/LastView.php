@@ -40,6 +40,11 @@ class LastView extends Model
                               ->where('galery.deleted', Utils::VALUE_ACTIVED)
                               ->orderByRaw('galery.created_at DESC');
                             })
+                            ->leftJoin('offers', function ($join) {
+                              $join->on('offers.id_product', '=', 'products.id')
+                              ->where('offers.deleted', Utils::VALUE_ACTIVED)
+                              ->orderByRaw('offers.created_at DESC');
+                            })
                             ->select(
                               'products.id',
                               'products.name',
@@ -48,7 +53,8 @@ class LastView extends Model
                               'products.unity',
                               'categories.category',
                               'products.id_category',
-                              'galery.path'
+                              'galery.path',
+                              'offers.percentage'
                             )
                             ->first();
 
@@ -79,7 +85,13 @@ class LastView extends Model
                               ->where('galery.deleted', Utils::VALUE_ACTIVED)
                               ->orderByRaw('galery.created_at DESC');
                             })
+                            ->leftJoin('offers', function ($join) {
+                              $join->on('offers.id_product', '=', 'products.id')
+                              ->where('offers.deleted', Utils::VALUE_ACTIVED)
+                              ->orderByRaw('offers.created_at DESC');
+                            })
                             ->limit(3)
+                            ->groupBy('last_views.id_product')
                             ->select(
                               'products.id',
                               'products.name',
@@ -87,7 +99,8 @@ class LastView extends Model
                               'products.description',
                               'products.unity',
                               'categories.category',
-                              'galery.path'
+                              'galery.path',
+                              'offers.percentage'
                             )
                             ->get();
 
@@ -119,6 +132,11 @@ class LastView extends Model
                               ->where('galery.deleted', Utils::VALUE_ACTIVED)
                               ->orderByRaw('galery.created_at DESC');
                             })
+                            ->leftJoin('offers', function ($join) {
+                              $join->on('offers.id_product', '=', 'products.id')
+                              ->where('offers.deleted', Utils::VALUE_ACTIVED)
+                              ->orderByRaw('offers.created_at DESC');
+                            })
                             ->select(
                               'products.id',
                               'products.name',
@@ -126,7 +144,8 @@ class LastView extends Model
                               'products.description',
                               'products.unity',
                               'categories.category',
-                              'galery.path'
+                              'galery.path',
+                              'offers.percentage'
                               // 'favorites.id'
                             )
                             ->selectRaw('IF( COUNT(tree_favorites.id) > 0, true, false) AS favorite')

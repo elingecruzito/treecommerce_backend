@@ -43,7 +43,8 @@ class Offers extends Model
                         'products.description',
                         'products.unity',
                         'categories.category',
-                        'galery.path'
+                        'galery.path',
+                        'offers.percentage'
                       )
                       ->groupBy('offers.id_product')
                       ->limit(3)
