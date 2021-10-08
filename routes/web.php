@@ -51,4 +51,8 @@ Route::post('/search/search', [App\Http\Controllers\Backend\SearchController::cl
 
 //---------------------------------------------------------------------------------------------------------------------
 
+Route::post('/products/product', [App\Http\Controllers\Backend\ProductosController::class, 'product']);
+
+//---------------------------------------------------------------------------------------------------------------------
+
 Route::post('/galery', [App\Http\Controllers\Backend\GaleryController::class, 'galery']);

@@ -151,4 +151,35 @@ class Products extends Model
       }
       return null;
     }
+
+    public static function product($token, $id){
+      if( User::getAuthenticateToken($token) ){ // Si el token es valido
+        // Se obtienen los productos que contengan el texto
+        return Products::where([
+                          'products.deleted' => Utils::VALUE_ACTIVED,
+                          'products.id' => $id
+                        ])
+                        ->join('categories', function ($join) {
+                          $join->on('categories.id', '=', 'products.id_category');
+                        })
+                        ->leftJoin('offers', function ($join) {
+                          $join->on('offers.id_product', '=', 'products.id')
+                          ->where('offers.deleted', Utils::VALUE_ACTIVED)
+                          ->orderByRaw('offers.created_at DESC');
+                        })
+                        ->select(
+                          'products.id',
+                          'products.name',
+                          'products.price',
+                          'products.description',
+                          'products.unity',
+                          'categories.category',
+                        )
+                        ->groupBy('products.id')
+                        ->selectRaw('IF( tree_offers.percentage is null, 0, tree_offers.percentage) AS percentage')
+                        ->first();
+
+      }
+      return null;
+    }
 }
