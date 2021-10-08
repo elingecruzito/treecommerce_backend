@@ -47,4 +47,8 @@ Route::post('/inspirated/list', [App\Http\Controllers\Backend\InspiratedControll
 
 //---------------------------------------------------------------------------------------------------------------------
 
+Route::post('/search/search', [App\Http\Controllers\Backend\SearchController::class, 'search']);
+
+//---------------------------------------------------------------------------------------------------------------------
+
 Route::post('/galery', [App\Http\Controllers\Backend\GaleryController::class, 'galery']);

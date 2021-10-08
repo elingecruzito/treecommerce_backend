@@ -112,4 +112,43 @@ class Products extends Model
 
       return null;
     }
+
+    public static function searching($token, $product){
+      if( User::getAuthenticateToken($token) ){ // Si el token es valido
+        // Se obtienen los productos que contengan el texto
+        return Products::where([
+                          'products.deleted' => Utils::VALUE_ACTIVED,
+                          ['unity', '>', 0],
+                          ['name', 'like', '%'.$product.'%' ],
+                        ])
+                        ->join('categories', function ($join) {
+                          $join->on('categories.id', '=', 'products.id_category');
+                        })
+                        ->leftJoin('galery', function ($join) {
+                          $join->on('galery.id_product', '=', 'products.id')
+                          ->where('galery.deleted', Utils::VALUE_ACTIVED)
+                          ->orderByRaw('galery.created_at DESC');
+                        })
+                        ->leftJoin('offers', function ($join) {
+                          $join->on('offers.id_product', '=', 'products.id')
+                          ->where('offers.deleted', Utils::VALUE_ACTIVED)
+                          ->orderByRaw('offers.created_at DESC');
+                        })
+                        ->select(
+                          'products.id',
+                          'products.name',
+                          'products.price',
+                          'products.description',
+                          'products.unity',
+                          'categories.category',
+                          'galery.path',
+                          // 'offers.percentage'
+                        )
+                        ->groupBy('products.id')
+                        ->selectRaw('IF( tree_offers.percentage is null, 0, tree_offers.percentage) AS percentage')
+                        ->get();
+
+      }
+      return null;
+    }
 }
