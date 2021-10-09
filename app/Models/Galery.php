@@ -21,4 +21,8 @@ class Galery extends Model
     public static function getGalery($id_product){
       return Galery::where(['id_product' => $id_product, 'deleted' => Utils::VALUE_ACTIVED])->get();
     }
+
+    public static function getCover($id_product){
+      return Galery::where(['id_product' => $id_product, 'deleted' => Utils::VALUE_ACTIVED])->first();
+    }
 }

@@ -4,7 +4,8 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Codes;
+
+use App\Models\Utils;
 use App\Models\Galery;
 
 class GaleryController extends Controller
@@ -23,17 +24,21 @@ class GaleryController extends Controller
       if ( $request->validate(['product' => ['required']]) ){ // Si el valor token es requerido
         $data = Galery::getGalery($request['product']); // Se ejecuta la consulta
         if( $data != null ){ // Si se obtienen valores
-          return [ //Retorna los valores obtenidos
-            'code' => Codes::CODE_OK,
-            'message' => Codes::MESSAGE_OK,
-            'body' => $data
-          ];
+            return Utils::success($data);
         }
       }
       //En caso de no optener valores
-      return [
-          'code' => Codes::CODE_NOT_FOUND ,
-          'message' => Codes::MESSAGE_NOT_FOUND,
-      ];
+      return Utils::fail();
+    }
+
+    public function cover(Request $request){
+      if ( $request->validate(['product' => ['required']]) ){ // Si el valor token es requerido
+        $data = Galery::getCover($request['product']); // Se ejecuta la consulta
+        if( $data != null ){ // Si se obtienen valores
+            return Utils::success($data);
+        }
+      }
+      //En caso de no optener valores
+      return Utils::fail();
     }
 }

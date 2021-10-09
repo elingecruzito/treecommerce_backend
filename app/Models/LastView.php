@@ -19,6 +19,49 @@ class LastView extends Model
         'deleted'
     ];
 
+    private static function getOriginalQuery(){
+      return LastView::where([
+                              'last_views.deleted' => Utils::VALUE_ACTIVED
+                          ])
+                          ->join('products', function ($join) {
+                            $join->on('products.id', '=', 'last_views.id_product')
+                            ->where('products.deleted', Utils::VALUE_ACTIVED);
+                          })
+                          ->join('categories', function ($join) {
+                            $join->on('categories.id', '=', 'products.id_category');
+                          })
+                          ->join('providers', function ($join) {
+                            $join->on('providers.id', '=', 'products.id_provider');
+                          })
+                          ->leftJoin('offers', function ($join) {
+                            $join->on('offers.id_product', '=', 'last_views.id_product')
+                            ->where('offers.deleted', Utils::VALUE_ACTIVED);
+                          })
+                          ->leftJoin('valorations', function ($join) {
+                            $join->on('valorations.id_product', '=', 'last_views.id_product')
+                            ->where('valorations.deleted', Utils::VALUE_ACTIVED);
+                          })
+                          ->leftJoin('favorites', function ($join) {
+                            $join->on('favorites.id_product', '=', 'last_views.id_product')
+                            ->where('favorites.deleted', Utils::VALUE_ACTIVED);
+                          })
+                          ->select(
+                            'products.id',
+                            'products.name',
+                            'products.price',
+                            'products.description',
+                            'products.unity',
+                            'categories.category',
+                            'products.id_category',
+                            'providers.name AS provider',
+                          )
+                          ->selectRaw('IF( AVG(tree_valorations.`starts`) is null, 0, AVG(tree_valorations.`starts`)) AS valoration')
+                          ->selectRaw('COUNT(tree_valorations.id) AS count_valoration')
+                          ->selectRaw('IF( COUNT(tree_favorites.id) > 0, 1, 0) AS favorite')
+                          ->selectRaw('IF( tree_offers.percentage is null, 0, tree_offers.percentage) AS percentage')
+                          ->orderByRaw('tree_last_views.created_at DESC');
+    }
+
     public static function getLast($token){
 
       if( User::getAuthenticateToken($token) ){ // Si el token es valido
@@ -26,38 +69,11 @@ class LastView extends Model
         $dataUser = User::getDataByToken($token); //Se obtienen los datos del token
 
         //Se optiene el ultimo producto visto
-        return LastView::where(['last_views.id_user' => $dataUser->id, 'last_views.deleted' => Utils::VALUE_ACTIVED ])
-                            ->orderByRaw('tree_last_views.created_at DESC')
-                            ->join('products', function ($join) {
-                              $join->on('products.id', '=', 'last_views.id_product')
-                              ->where('products.deleted', Utils::VALUE_ACTIVED);
-                            })
-                            ->join('categories', function ($join) {
-                              $join->on('categories.id', '=', 'products.id_category');
-                            })
-                            ->leftJoin('galery', function ($join) {
-                              $join->on('galery.id_product', '=', 'products.id')
-                              ->where('galery.deleted', Utils::VALUE_ACTIVED)
-                              ->orderByRaw('galery.created_at DESC');
-                            })
-                            ->leftJoin('offers', function ($join) {
-                              $join->on('offers.id_product', '=', 'products.id')
-                              ->where('offers.deleted', Utils::VALUE_ACTIVED)
-                              ->orderByRaw('offers.created_at DESC');
-                            })
-                            ->select(
-                              'products.id',
-                              'products.name',
-                              'products.price',
-                              'products.description',
-                              'products.unity',
-                              'categories.category',
-                              'products.id_category',
-                              'galery.path'
-                            )
-                            ->selectRaw('IF( tree_offers.percentage is null, 0, tree_offers.percentage) AS percentage')
-                            ->first();
-
+        return LastView::getOriginalQuery()
+                        ->where([
+                          'last_views.id_user' => $dataUser->id
+                        ])
+                        ->first();
       }
 
       return null;
@@ -71,40 +87,13 @@ class LastView extends Model
         $dataUser = User::getDataByToken($token); //Se obtienen los datos del token
 
         //Se optienen los ultimos 3 productos vistos
-        return LastView::where(['id_user' => $dataUser->id, 'last_views.deleted' => Utils::VALUE_ACTIVED ])
-                            ->orderByRaw('tree_last_views.created_at DESC')
-                            ->join('products', function ($join) {
-                              $join->on('products.id', '=', 'last_views.id_product')
-                              ->where('products.deleted', Utils::VALUE_ACTIVED);
-                            })
-                            ->join('categories', function ($join) {
-                              $join->on('categories.id', '=', 'products.id_category');
-                            })
-                            ->leftJoin('galery', function ($join) {
-                              $join->on('galery.id_product', '=', 'products.id')
-                              ->where('galery.deleted', Utils::VALUE_ACTIVED)
-                              ->orderByRaw('galery.created_at DESC');
-                            })
-                            ->leftJoin('offers', function ($join) {
-                              $join->on('offers.id_product', '=', 'products.id')
-                              ->where('offers.deleted', Utils::VALUE_ACTIVED)
-                              ->orderByRaw('offers.created_at DESC');
-                            })
-                            ->limit(3)
-                            ->groupBy('last_views.id_product')
-                            ->select(
-                              'products.id',
-                              'products.name',
-                              'products.price',
-                              'products.description',
-                              'products.unity',
-                              'categories.category',
-                              'galery.path',
-                              // 'offers.percentage'
-                            )
-                            ->selectRaw('IF( tree_offers.percentage is null, 0, tree_offers.percentage) AS percentage')
-                            ->get();
-
+        return LastView::getOriginalQuery()
+                        ->where([
+                          'last_views.id_user' => $dataUser->id
+                        ])
+                        ->limit(3)
+                        ->groupBy('last_views.id_product')
+                        ->get();
       }
 
       return null;
@@ -114,45 +103,12 @@ class LastView extends Model
     public static function completeList($token){
       if( User::getAuthenticateToken($token) ){ // Si el token es valido
         $dataUser = User::getDataByToken($token); //Se obtienen los datos del token
-
-        return LastView::where(['last_views.id_user' => $dataUser->id, 'last_views.deleted' => Utils::VALUE_ACTIVED ])
-                            ->orderByRaw('tree_last_views.created_at DESC')
-                            ->join('products', function ($join) {
-                              $join->on('products.id', '=', 'last_views.id_product')
-                              ->where('products.deleted', Utils::VALUE_ACTIVED);
-                            })
-                            ->join('categories', function ($join) {
-                              $join->on('categories.id', '=', 'products.id_category');
-                            })
-                            ->leftJoin('favorites', function ($join) {
-                              $join->on('favorites.id_product', '=', 'products.id')
-                              ->where('favorites.deleted', Utils::VALUE_ACTIVED);
-                            })
-                            ->leftJoin('galery', function ($join) {
-                              $join->on('galery.id_product', '=', 'products.id')
-                              ->where('galery.deleted', Utils::VALUE_ACTIVED)
-                              ->orderByRaw('galery.created_at DESC');
-                            })
-                            ->leftJoin('offers', function ($join) {
-                              $join->on('offers.id_product', '=', 'products.id')
-                              ->where('offers.deleted', Utils::VALUE_ACTIVED)
-                              ->orderByRaw('offers.created_at DESC');
-                            })
-                            ->select(
-                              'products.id',
-                              'products.name',
-                              'products.price',
-                              'products.description',
-                              'products.unity',
-                              'categories.category',
-                              'galery.path',
-                              // 'offers.percentage'
-                              // 'favorites.id'
-                            )
-                            ->selectRaw('IF( COUNT(tree_favorites.id) > 0, true, false) AS favorite')
-                            ->selectRaw('IF( tree_offers.percentage is null, 0, tree_offers.percentage) AS percentage')
-                            ->groupBy('last_views.id_product')
-                            ->get();
+        return LastView::getOriginalQuery()
+                        ->where([
+                          'last_views.id_user' => $dataUser->id
+                        ])
+                        ->groupBy('last_views.id_product')
+                        ->get();
       }
     }
 

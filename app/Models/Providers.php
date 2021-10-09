@@ -10,4 +10,10 @@ class Providers extends Model
     use HasFactory;
 
     protected $table = 'providers';
+
+    protected $hidden = [
+        'created_at',
+        'updated_at',
+        'deleted'
+    ];
 }

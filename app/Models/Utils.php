@@ -8,10 +8,12 @@ class Utils {
   CONST VALUE_ACTIVED = 0;
 
   public static function success($data){
+    $quries = \DB::getQueryLog();
     return [ //Retorna los valores obtenidos
       'code' => Codes::CODE_OK,
       'message' => Codes::MESSAGE_OK,
-      'length' => $data->count(),
+      // 'length' => $data->count(),
+      // 'query' => $quries[count($quries) - 1]['query'],
       'body' => $data
     ];
   }

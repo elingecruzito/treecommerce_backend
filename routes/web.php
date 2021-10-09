@@ -17,6 +17,8 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
+\DB::enableQueryLog();
+
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
@@ -56,3 +58,4 @@ Route::post('/products/product', [App\Http\Controllers\Backend\ProductosControll
 //---------------------------------------------------------------------------------------------------------------------
 
 Route::post('/galery', [App\Http\Controllers\Backend\GaleryController::class, 'galery']);
+Route::post('/galery/cover', [App\Http\Controllers\Backend\GaleryController::class, 'cover']);
