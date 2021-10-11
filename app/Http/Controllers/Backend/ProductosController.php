@@ -21,4 +21,15 @@ class ProductosController extends Controller
       //En caso de no optener valores
       return Utils::fail();
     }
+
+    public function productsByProvider(Request $request){
+      if ( $request->validate([ 'token' => ['required'], 'id' => ['required'] ]) ){ // Si el valor token es requerido
+        $data = Products::productsByProvider($request['token'], $request['id']); // Se ejecuta la consulta
+        if( $data != null ){ // Si se obtienen valores
+          return Utils::success($data);
+        }
+      }
+      //En caso de no optener valores
+      return Utils::fail();
+    }
 }

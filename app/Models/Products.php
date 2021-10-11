@@ -55,7 +55,8 @@ class Products extends Model
                       ->selectRaw('IF( AVG(tree_valorations.`starts`) is null, 0, AVG(tree_valorations.`starts`)) AS valoration')
                       ->selectRaw('COUNT(tree_valorations.id) AS count_valoration')
                       ->selectRaw('IF( COUNT(tree_favorites.id) > 0, 1, 0) AS favorite')
-                      ->selectRaw('IF( tree_offers.percentage is null, 0, tree_offers.percentage) AS percentage');
+                      ->selectRaw('IF( tree_offers.percentage is null, 0, tree_offers.percentage) AS percentage')
+                      ->groupBy('products.id');
     }
 
     public static function inspirated($token){
@@ -68,7 +69,6 @@ class Products extends Model
                       'id_category' => LastView::getLast($token)->id_category,
                       ['unity', '>', 0],
                     ])
-                    ->groupBy('products.id')
                     ->orderByRaw('AVG(tree_valorations.`starts`) DESC')
                     ->limit(3)
                     ->get();
@@ -88,7 +88,6 @@ class Products extends Model
                             'id_category' => LastView::getLast($token)->id_category,
                             ['unity', '>', 0],
                           ])
-                          ->groupBy('valorations.id_product')
                           ->orderByRaw('AVG(tree_valorations.`starts`) DESC')
                           ->get();
       }
@@ -104,6 +103,18 @@ class Products extends Model
                           ['unity', '>', 0],
                           ['products.name', 'like', '%'.$product.'%' ],
                         ])
+                        ->get();
+      }
+      return null;
+    }
+
+    public static function productsByProvider($token, $id_product){
+      if( User::getAuthenticateToken($token) ){ // Si el token es valido
+
+        return Products::getOriginalQuery()
+                        ->where('id_provider', Products::where('id', $id_product)->first()->id_provider)
+                        ->orderByRaw('AVG(tree_valorations.`starts`) DESC')
+                        ->limit(2)
                         ->get();
       }
       return null;
