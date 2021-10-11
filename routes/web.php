@@ -58,5 +58,9 @@ Route::post('/products/provider', [App\Http\Controllers\Backend\ProductosControl
 
 //---------------------------------------------------------------------------------------------------------------------
 
+Route::post('/providers/product', [App\Http\Controllers\Backend\ProvidersController::class, 'valorationByProduct']);
+
+//---------------------------------------------------------------------------------------------------------------------
+
 Route::post('/galery', [App\Http\Controllers\Backend\GaleryController::class, 'galery']);
 Route::post('/galery/cover', [App\Http\Controllers\Backend\GaleryController::class, 'cover']);
