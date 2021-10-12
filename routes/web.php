@@ -62,5 +62,11 @@ Route::post('/providers/product', [App\Http\Controllers\Backend\ProvidersControl
 
 //---------------------------------------------------------------------------------------------------------------------
 
+Route::post('/valorations/all', [App\Http\Controllers\Backend\ValorationsController::class, 'previewall']);
+Route::post('/valorations/positives', [App\Http\Controllers\Backend\ValorationsController::class, 'previewpositives']);
+Route::post('/valorations/negatives', [App\Http\Controllers\Backend\ValorationsController::class, 'previewnegatives']);
+
+//---------------------------------------------------------------------------------------------------------------------
+
 Route::post('/galery', [App\Http\Controllers\Backend\GaleryController::class, 'galery']);
 Route::post('/galery/cover', [App\Http\Controllers\Backend\GaleryController::class, 'cover']);

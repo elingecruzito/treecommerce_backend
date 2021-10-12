@@ -16,4 +16,63 @@ class Valorations extends Model
         'updated_at',
         'deleted'
     ];
+
+    private static function getOriginalQuery(){
+      return Valorations::where('valorations.deleted', Utils::VALUE_ACTIVED)
+                        ->leftJoin('products', function ($join) {
+                          $join->on('products.id', '=', 'valorations.id_product');
+                        })
+                        ->select(
+                          'valorations.id',
+                          'valorations.starts',
+                          'valorations.comment',
+                          'products.name as product'
+                        )
+                        ->orderByRaw('tree_valorations.created_at DESC');
+    }
+
+    public static function getPreviewAll($token, $id_product){
+
+      if( User::getAuthenticateToken($token) ){ // Si el token es valido
+        //Se optiene el ultimo producto visto
+        return Valorations::getOriginalQuery()
+                        ->where('valorations.id_product', $id_product)
+                        ->limit(3)
+                        ->get();
+      }
+
+      return null;
+    }
+
+    public static function getPreviewPositives($token, $id_product){
+
+      if( User::getAuthenticateToken($token) ){ // Si el token es valido
+        //Se optiene el ultimo producto visto
+        return Valorations::getOriginalQuery()
+                        ->where([
+                          ['valorations.id_product','=', $id_product],
+                          ['valorations.starts','>', 3],
+                        ])
+                        ->limit(3)
+                        ->get();
+      }
+
+      return null;
+    }
+
+    public static function getPreviewNegatives($token, $id_product){
+
+      if( User::getAuthenticateToken($token) ){ // Si el token es valido
+        //Se optiene el ultimo producto visto
+        return Valorations::getOriginalQuery()
+                        ->where([
+                          ['valorations.id_product','=', $id_product],
+                          ['valorations.starts','<=', 3],
+                        ])
+                        ->limit(3)
+                        ->get();
+      }
+
+      return null;
+    }
 }
