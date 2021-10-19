@@ -7,11 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 
 use Illuminate\Support\Facades\DB;
 
+use Carbon\Carbon;
+
 class LastView extends Model
 {
     use HasFactory;
 
     protected $table = 'last_views';
+
+    public $timestamps = true;
 
     protected $hidden = [
         'created_at',
@@ -109,6 +113,19 @@ class LastView extends Model
                         ])
                         ->groupBy('last_views.id_product')
                         ->get();
+      }
+    }
+
+    public static function add($token, $id){
+      if( User::getAuthenticateToken($token) ){ // Si el token es valido
+        $dataUser = User::getDataByToken($token); //Se obtienen los datos del token
+        return LastView::insert([
+          'id_user' => $dataUser->id,
+          'id_product' => $id,
+          'created_at' => Carbon::now(),
+          'updated_at' => Carbon::now(),
+          'deleted' => 0
+        ]);
       }
     }
 

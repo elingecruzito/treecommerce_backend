@@ -38,6 +38,7 @@ Route::post('/home/history', [App\Http\Controllers\Backend\HomeController::class
 //---------------------------------------------------------------------------------------------------------------------
 
 Route::post('/watched/list', [App\Http\Controllers\Backend\WatchedController::class, 'completeList']);
+Route::post('/watched/add', [App\Http\Controllers\Backend\WatchedController::class, 'add']);
 
 //---------------------------------------------------------------------------------------------------------------------
 
