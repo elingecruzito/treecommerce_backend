@@ -7,8 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 
 use Illuminate\Support\Facades\DB;
 
-use Carbon\Carbon;
-
 class LastView extends Model
 {
     use HasFactory;
@@ -16,6 +14,10 @@ class LastView extends Model
     protected $table = 'last_views';
 
     public $timestamps = true;
+
+    protected $fillable = [
+        'id_user', 'id_product', 'deleted'
+    ];
 
     protected $hidden = [
         'created_at',
@@ -119,11 +121,9 @@ class LastView extends Model
     public static function add($token, $id){
       if( User::getAuthenticateToken($token) ){ // Si el token es valido
         $dataUser = User::getDataByToken($token); //Se obtienen los datos del token
-        return LastView::insert([
+        return LastView::create([
           'id_user' => $dataUser->id,
-          'id_product' => $id,
-          'created_at' => Carbon::now(),
-          'updated_at' => Carbon::now(),
+          'id_product' => (int)$id,
           'deleted' => 0
         ]);
       }
