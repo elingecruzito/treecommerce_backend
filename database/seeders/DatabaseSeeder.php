@@ -17,16 +17,13 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $_user = new \App\Models\User;
-        $_user->name = 'Administrador';
-        $_user->email = 'admin@admin.com';
-        $_user->email_verified_at = now();
-        $_user->remember_token = 'OzHxUoOd9OlBWFEpp4cw';
-        $_user->password = Hash::make('59xNLVO0');
 
-        $_user->save();
-
-        \App\Models\User::factory()->count(19)->create();
+        $this->call([
+          EstadosSeeder::class,
+          MunicipiosSeeder::class,
+          RelacionEstadosMunicipiosSeeder::class,
+          UserSeeder::class,
+        ]);
 
         \App\Models\Categories::factory()->count(20)->create();
         \App\Models\Status::factory()->count(20)->create();

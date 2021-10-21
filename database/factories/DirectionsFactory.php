@@ -21,11 +21,15 @@ class DirectionsFactory extends Factory
      */
     public function definition()
     {
+
+      $state = $this->faker->numberBetween(1,32);
+      $data = \App\Models\RelacionEstadosMunicipios::getRangeCountry($state);
+      
         return [
             //
             'id_user' => $this->faker->numberBetween(1,20),
-            'state' => $this->faker->numberBetween(1,50),
-            'country' => $this->faker->numberBetween(1,50),
+            'state' => $state,
+            'country' => $this->faker->numberBetween($data->inicio, $data->fin),
             'address' => $this->faker->paragraph(),
             'cp' => $this->faker->numberBetween(20000,99999),
             'phone' => $this->faker->numerify('###-###-##-##'),

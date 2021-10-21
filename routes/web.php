@@ -71,3 +71,7 @@ Route::post('/valorations/negatives', [App\Http\Controllers\Backend\ValorationsC
 
 Route::post('/galery', [App\Http\Controllers\Backend\GaleryController::class, 'galery']);
 Route::post('/galery/cover', [App\Http\Controllers\Backend\GaleryController::class, 'cover']);
+
+//---------------------------------------------------------------------------------------------------------------------
+
+Route::post('/directions/list', [App\Http\Controllers\Backend\DirectionsController::class, 'completeList']);

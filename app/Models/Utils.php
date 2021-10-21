@@ -13,7 +13,7 @@ class Utils {
       'code' => Codes::CODE_OK,
       'message' => Codes::MESSAGE_OK,
       // 'length' => $data->count(),
-      // 'query' => $quries[count($quries) - 1]['query'],
+      'query' => $quries[count($quries) - 1]['query'],
       'body' => $data
     ];
   }
