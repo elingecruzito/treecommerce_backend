@@ -23,9 +23,10 @@ class RelationSalesFactory extends Factory
     {
         return [
             //
-            'id_user' => $this->faker->numberBetween(1, 20),
             'id_product' => $this->faker->numberBetween(1, 100),
             'id_sale' => $this->faker->numberBetween(1, 50),
+            'count' => $this->faker->numberBetween(1, 50),
+            'cost' => $this->faker->numberBetween(1, 999),
         ];
     }
 }

@@ -75,3 +75,7 @@ Route::post('/galery/cover', [App\Http\Controllers\Backend\GaleryController::cla
 //---------------------------------------------------------------------------------------------------------------------
 
 Route::post('/directions/list', [App\Http\Controllers\Backend\DirectionsController::class, 'completeList']);
+
+//---------------------------------------------------------------------------------------------------------------------
+
+Route::post('/buy/add', [App\Http\Controllers\Backend\BuysController::class, 'add']);

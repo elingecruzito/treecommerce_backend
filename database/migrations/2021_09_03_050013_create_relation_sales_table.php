@@ -15,9 +15,10 @@ class CreateRelationSalesTable extends Migration
     {
         Schema::create('relation_sales', function (Blueprint $table) {
             $table->id();
-            $table->integer('id_user');
-            $table->integer('id_product');
             $table->integer('id_sale');
+            $table->integer('id_product');
+            $table->integer('count');
+            $table->integer('cost');
             // $table->timestamps();
         });
     }

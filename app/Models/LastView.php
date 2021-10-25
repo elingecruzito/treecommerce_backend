@@ -121,11 +121,13 @@ class LastView extends Model
     public static function add($token, $id){
       if( User::getAuthenticateToken($token) ){ // Si el token es valido
         $dataUser = User::getDataByToken($token); //Se obtienen los datos del token
-        return LastView::create([
+        LastView::create([
           'id_user' => $dataUser->id,
           'id_product' => (int)$id,
           'deleted' => 0
         ]);
+
+        return LastView::getLast($token);
       }
     }
 

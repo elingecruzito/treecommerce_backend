@@ -23,7 +23,10 @@ class SalesFactory extends Factory
     {
         return [
             //
+            'id_user' => $this->faker->numberBetween(1, 20),
             'id_status' => $this->faker->numberBetween(1, 20),
+            'id_direction' => $this->faker->numberBetween(1, 20),
+            'total' => $this->faker->numberBetween(1, 9999),
             'created_at' => now()->subDays($this->faker->numberBetween(1, 30)),
             'updated_at' => now()->addDays($this->faker->numberBetween(1, 30)),
             'deleted' => 0,
