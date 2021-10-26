@@ -14,6 +14,8 @@ class SalesFactory extends Factory
      */
     protected $model = Sales::class;
 
+    private static $index = 0;
+
     /**
      * Define the model's default state.
      *
@@ -26,7 +28,14 @@ class SalesFactory extends Factory
             'id_user' => $this->faker->numberBetween(1, 20),
             'id_status' => $this->faker->numberBetween(1, 20),
             'id_direction' => $this->faker->numberBetween(1, 20),
-            'total' => $this->faker->numberBetween(1, 9999),
+            'total' => function (array $attributes) {
+
+                self::$index++;
+
+                return \App\Models\RelationSales::where('id_sale', self::$index)
+                              ->selectRaw('SUM((tree_relation_sales.cost) * (tree_relation_sales.count)) AS suma')
+                              ->first()->suma;
+            },
             'created_at' => now()->subDays($this->faker->numberBetween(1, 30)),
             'updated_at' => now()->addDays($this->faker->numberBetween(1, 30)),
             'deleted' => 0,

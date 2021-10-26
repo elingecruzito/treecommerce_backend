@@ -27,7 +27,7 @@ class OffersFactory extends Factory
             'percentage' => $this->faker->numberBetween(1,100),
             'created_at' => now()->subDays($this->faker->numberBetween(1, 30)),
             'updated_at' => now()->addDays($this->faker->numberBetween(1, 30)),
-            'deleted' => 0,
+            'deleted' => $this->faker->numberBetween(0,1),
         ];
     }
 }

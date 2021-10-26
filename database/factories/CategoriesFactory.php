@@ -24,7 +24,6 @@ class CategoriesFactory extends Factory
         return [
             //
             'category' => $this->faker->name(),
-            // 'delete' => $this->faker->numberBetween( 0, 1),
             'deleted' => 0
         ];
     }

@@ -21,12 +21,15 @@ class RelationSalesFactory extends Factory
      */
     public function definition()
     {
+
         return [
-            //
             'id_product' => $this->faker->numberBetween(1, 100),
             'id_sale' => $this->faker->numberBetween(1, 50),
             'count' => $this->faker->numberBetween(1, 50),
-            'cost' => $this->faker->numberBetween(1, 999),
+            'cost' => function (array $attributes) {
+                return \App\Models\Products::where('id', $attributes['id_product'])
+                                ->first()->price;
+            },
         ];
     }
 }

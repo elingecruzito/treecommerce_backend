@@ -24,13 +24,14 @@ class ProductsFactory extends Factory
     {
         return [
             //
-            'name' => Str::random(10),
+            'name' => Str::random(100),
             'price' => $this->faker->numberBetween(100, 9999) ,
             'description' => $this->faker->paragraph() ,
             'unity' => $this->faker->numberBetween(1, 100) ,
-            // 'onsale' => $this->faker->numberBetween(1, 100),
             'id_provider' => $this->faker->numberBetween(1,20),
             'id_category' => $this->faker->numberBetween(1,20),
+            'created_at' => now()->subDays($this->faker->numberBetween(1, 30)),
+            'updated_at' => now()->addDays($this->faker->numberBetween(1, 30)),
             'deleted' => 0,
         ];
     }
