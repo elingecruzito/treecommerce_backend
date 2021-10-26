@@ -24,6 +24,17 @@ class Directions extends Model
         'deleted'
     ];
 
+    /*
+      {
+        'id' => int,
+        'state' => String,
+        'country' => String,
+        'address' => String,
+        'cp' => int,
+        'phone' => String,
+        'person' => String
+      }
+    */
     public static function getListDirections($token){
       if( User::getAuthenticateToken($token) ){ // Si el token es valido
 

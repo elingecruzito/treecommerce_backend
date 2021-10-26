@@ -12,15 +12,6 @@ use App\Models\Galery;
 
 class HomeController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        // $this->middleware('auth');
-    }
 
     public function carrucel(){
 
@@ -37,6 +28,9 @@ class HomeController extends Controller
 
     }
 
+    /*
+      token => user identificador
+    */
     public function lastView(Request $request){
 
       if ( $request->validate(['token' => ['required']]) ){ // Si el valor token es requerido
@@ -49,6 +43,9 @@ class HomeController extends Controller
       return Utils::fail();
     }
 
+    /*
+      token => user identificador
+    */
     public function offers(Request $request){
       if ( $request->validate(['token' => ['required']]) ){ // Si el valor token es requerido
         $data = Offers::getLastOffers($request['token']); // Se ejecuta la consulta
@@ -60,6 +57,9 @@ class HomeController extends Controller
       return Utils::fail();
     }
 
+    /*
+      token => user identificador
+    */
     public function inspirated(Request $request){
       if ( $request->validate(['token' => ['required']]) ){ // Si el valor token es requerido
         $data = Products::inspirated($request['token']); // Se ejecuta la consulta
@@ -71,6 +71,9 @@ class HomeController extends Controller
       return Utils::fail();
     }
 
+    /*
+      token => user identificador
+    */
     public function history(Request $request){
       if ( $request->validate(['token' => ['required']]) ){ // Si el valor token es requerido
         $data = LastView::shortHistory($request['token']); // Se ejecuta la consulta

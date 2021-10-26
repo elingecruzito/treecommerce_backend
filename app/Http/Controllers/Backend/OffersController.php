@@ -10,16 +10,10 @@ use App\Models\Utils;
 
 class OffersController extends Controller
 {
-  /**
-   * Create a new controller instance.
-   *
-   * @return void
-   */
-  public function __construct()
-  {
-      // $this->middleware('auth');
-  }
 
+  /*
+    token => user identificador
+  */
   public function list(Request $request){
     if ( $request->validate(['token' => ['required']]) ){ // Si el valor token es requerido
       $data = Offers::getListOffers($request['token']); // Se ejecuta la consulta

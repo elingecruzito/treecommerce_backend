@@ -10,16 +10,10 @@ use App\Models\Galery;
 
 class GaleryController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        // $this->middleware('auth');
-    }
 
+    /*
+      product => id product
+    */
     public function galery(Request $request){
       if ( $request->validate(['product' => ['required']]) ){ // Si el valor token es requerido
         $data = Galery::getGalery($request['product']); // Se ejecuta la consulta
@@ -31,6 +25,9 @@ class GaleryController extends Controller
       return Utils::fail();
     }
 
+    /*
+      product => id product
+    */
     public function cover(Request $request){
       if ( $request->validate(['product' => ['required']]) ){ // Si el valor token es requerido
         $data = Galery::getCover($request['product']); // Se ejecuta la consulta

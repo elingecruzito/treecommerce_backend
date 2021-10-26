@@ -10,16 +10,10 @@ use App\Models\LastView;
 
 class WatchedController extends Controller
 {
-  /**
-   * Create a new controller instance.
-   *
-   * @return void
-   */
-  public function __construct()
-  {
-      // $this->middleware('auth');
-  }
 
+  /*
+    token => user identificador
+  */
   public function completeList(Request $request){
     if ( $request->validate(['token' => ['required']]) ){ // Si el valor token es requerido]
       $data = LastView::completeList($request['token']); // Se ejecuta la consulta
@@ -31,6 +25,10 @@ class WatchedController extends Controller
     return Utils::fail();
   }
 
+  /*
+    token => user identificador
+    id => product identificador
+  */
   public function add(Request $request){
     if ( $request->validate(['token' => ['required'], 'id' => ['required']]) ){ // Si el valor token es requerido]
       $data = LastView::add($request['token'], $request['id']); // Se ejecuta la consulta

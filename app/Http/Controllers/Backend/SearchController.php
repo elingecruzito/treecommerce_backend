@@ -10,7 +10,11 @@ use App\Models\Utils;
 
 class SearchController extends Controller
 {
-    //
+
+    /*
+      token => user identificador
+      searching => String for search product
+    */
     public function search(Request $request){
       if ( $request->validate([ 'token' => ['required'], 'searching' => ['required'] ]) ){ // Si el valor token es requerido
         $data = Products::searching($request['token'], $request['searching']); // Se ejecuta la consulta

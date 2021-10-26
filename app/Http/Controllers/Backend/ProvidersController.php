@@ -10,7 +10,10 @@ use App\Models\Utils;
 
 class ProvidersController extends Controller
 {
-    //
+  /*
+    token => user identificador
+    id => provider identificador
+  */
     public static function valorationByProduct(Request $request){
       if ( $request->validate([ 'token' => ['required'], 'id' => ['required'] ]) ){ // Si el valor token es requerido
         $data = Providers::getProviderByProduct($request['token'], $request['id']); // Se ejecuta la consulta

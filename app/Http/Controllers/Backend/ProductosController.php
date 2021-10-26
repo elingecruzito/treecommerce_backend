@@ -10,7 +10,10 @@ use App\Models\Utils;
 
 class ProductosController extends Controller
 {
-    //
+    /*
+      token => user identificador
+      id => product identificador
+    */
     public function product(Request $request){
       if ( $request->validate([ 'token' => ['required'], 'id' => ['required'] ]) ){ // Si el valor token es requerido
         $data = Products::product($request['token'], $request['id']); // Se ejecuta la consulta
@@ -22,6 +25,10 @@ class ProductosController extends Controller
       return Utils::fail();
     }
 
+    /*
+      token => user identificador
+      id => product identificador
+    */
     public function productsByProvider(Request $request){
       if ( $request->validate([ 'token' => ['required'], 'id' => ['required'] ]) ){ // Si el valor token es requerido
         $data = Products::productsByProvider($request['token'], $request['id']); // Se ejecuta la consulta
