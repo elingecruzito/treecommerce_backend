@@ -7,6 +7,13 @@ class Utils {
   CONST VALUE_DELETED = 1;
   CONST VALUE_ACTIVED = 0;
 
+  /*
+    {
+      'code' => int,
+      'message' => String,
+      'body' => Json
+    }
+  */
   public static function success($data){
     $quries = \DB::getQueryLog();
     return [ //Retorna los valores obtenidos
@@ -18,6 +25,14 @@ class Utils {
     ];
   }
 
+  /*
+    {
+      'code' => int,
+      'message' => String,
+      'length' => int
+      'body' => array
+    }
+  */
   public static function successArray($data){
     return [ //Retorna los valores obtenidos
       'code' => Codes::CODE_OK,
@@ -27,6 +42,12 @@ class Utils {
     ];
   }
 
+  /*
+    {
+      'code' => int,
+      'message' => String,
+    }
+  */
   public static function fail(){
     return [
         'code' => Codes::CODE_NOT_FOUND ,

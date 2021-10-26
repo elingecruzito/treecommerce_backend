@@ -17,7 +17,15 @@ class RelationSales extends Model
         'id', 'id_sale', 'id_product', 'count', 'cost'
     ];
 
-
+    /*
+      {
+        'id' => int,
+        'id_sale' => int,
+        'id_product' => int,
+        'count' => int,
+        'cost' => int,
+      }
+    */
     public static function add($token, $product, $count, $sale){
       if( User::getAuthenticateToken($token) ){ // Si el token es valido
 

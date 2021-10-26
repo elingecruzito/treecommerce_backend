@@ -25,6 +25,23 @@ class LastView extends Model
         'deleted'
     ];
 
+    /*
+      {
+        'id' => int,
+        'name' => String,
+        'price' => double,
+        'price' => int,
+        'description' => String,
+        'unity' => int,
+        'category' => String,
+        'id_category' => int,
+        'provider' => String,
+        'valoration' => double,
+        'count_valoration' => int,
+        'favorite' => int,
+        'percentage' => int,
+      }
+    */
     private static function getOriginalQuery(){
       return LastView::where([
                               'last_views.deleted' => Utils::VALUE_ACTIVED

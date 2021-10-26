@@ -23,6 +23,14 @@ class Valorations extends Model
         'deleted'
     ];
 
+    /*
+      {
+        'id' => int,
+        'starts' => int,
+        'comment' => String,
+        'name' => String,
+      }
+    */
     private static function getOriginalQuery(){
       return Valorations::where('valorations.deleted', Utils::VALUE_ACTIVED)
                         ->leftJoin('products', function ($join) {

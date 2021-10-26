@@ -22,6 +22,16 @@ class Sales extends Model
         'deleted'
     ];
 
+    /*
+      {
+        'id' => int,
+        'id_user' => int,
+        'id_status' => int,
+        'id_direction' => int,
+        'total' => int,
+        'created_at' => Date
+      }
+    */
     public static function add($token, $direction, $product, $count){
       if( User::getAuthenticateToken($token) ){ // Si el token es valido
 

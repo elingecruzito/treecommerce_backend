@@ -23,10 +23,24 @@ class Galery extends Model
         'deleted'
     ];
 
+    /*
+      {
+        'id' => int,
+        'id_product' => int,
+        'path' => String,
+      }
+    */
     public static function getGalery($id_product){
       return Galery::where(['id_product' => $id_product, 'deleted' => Utils::VALUE_ACTIVED])->get();
     }
 
+    /*
+      {
+        'id' => int,
+        'id_product' => int,
+        'path' => String,
+      }
+    */
     public static function getCover($id_product){
       return Galery::where(['id_product' => $id_product, 'deleted' => Utils::VALUE_ACTIVED])->first();
     }

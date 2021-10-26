@@ -35,6 +35,12 @@ class RelacionEstadosMunicipios extends Model
                                     });
     }
 
+    /*
+      {
+        'inicio' => int,
+        'fin' => int,
+      }
+    */
     public static function getRangeCountry($state){
       return RelacionEstadosMunicipios::relation()
                                       ->where([

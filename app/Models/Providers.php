@@ -23,6 +23,15 @@ class Providers extends Model
         'deleted'
     ];
 
+    /*
+      {
+        'id' => int,
+        'name' => String,
+        'phone' => int,
+        'address' => String,
+        'valoration' => double,
+      }
+    */
     private static function getOriginalQuery(){
       return Providers::where('providers.deleted',Utils::VALUE_ACTIVED)
                         ->leftJoin('products', function ($join) {
