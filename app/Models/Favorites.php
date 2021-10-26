@@ -11,6 +11,12 @@ class Favorites extends Model
 
     protected $table = 'favorites';
 
+    public $timestamps = true;
+
+    protected $fillable = [
+        'id', 'id_user', 'id_product'
+    ];
+
     protected $hidden = [
         'created_at',
         'updated_at',

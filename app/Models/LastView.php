@@ -16,7 +16,7 @@ class LastView extends Model
     public $timestamps = true;
 
     protected $fillable = [
-        'id_user', 'id_product', 'deleted'
+        'id', 'id_user', 'id_product'
     ];
 
     protected $hidden = [

@@ -11,6 +11,12 @@ class Valorations extends Model
 
     protected $table = 'valorations';
 
+    public $timestamps = true;
+
+    protected $fillable = [
+        'id', 'starts', 'comment', 'id_user', 'id_product'
+    ];
+
     protected $hidden = [
         'created_at',
         'updated_at',

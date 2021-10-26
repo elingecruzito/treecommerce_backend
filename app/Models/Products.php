@@ -11,6 +11,12 @@ class Products extends Model
 
     protected $table = 'products';
 
+    public $timestamps = true;
+
+    protected $fillable = [
+        'id', 'name', 'price', 'description', 'unity', 'id_provider', 'id_category'
+    ];
+
     protected $hidden = [
         'created_at',
         'updated_at',

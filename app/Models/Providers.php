@@ -11,6 +11,12 @@ class Providers extends Model
 
     protected $table = 'providers';
 
+    public $timestamps = true;
+
+    protected $fillable = [
+        'id', 'name', 'phone', 'address'
+    ];
+
     protected $hidden = [
         'created_at',
         'updated_at',

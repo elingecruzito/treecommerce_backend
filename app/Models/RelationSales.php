@@ -14,7 +14,7 @@ class RelationSales extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'id_sale', 'id_product', 'count', 'cost'
+        'id', 'id_sale', 'id_product', 'count', 'cost'
     ];
 
 

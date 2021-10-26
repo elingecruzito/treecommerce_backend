@@ -13,14 +13,13 @@ class Sales extends Model
 
     public $timestamps = true;
 
-    protected $hidden = [
-        // 'created_at',
-        'updated_at',
-        'deleted'
+    protected $fillable = [
+        'id', 'id_user', 'id_status', 'id_direction', 'total'. 'created_at'
     ];
 
-    protected $fillable = [
-        'id_user', 'id_status', 'id_direction', 'total'
+    protected $hidden = [
+        'updated_at',
+        'deleted'
     ];
 
     public static function add($token, $direction, $product, $count){

@@ -11,8 +11,13 @@ class Galery extends Model
 
     protected $table = 'galery';
 
+    public $timestamps = true;
+
+    protected $fillable = [
+        'id', 'id_product', 'path'
+    ];
+
     protected $hidden = [
-        'id_product',
         'created_at',
         'updated_at',
         'deleted'

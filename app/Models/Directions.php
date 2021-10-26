@@ -11,6 +11,12 @@ class Directions extends Model
 
     protected $table = 'directions';
 
+    public $timestamps = true;
+
+    protected $fillable = [
+        'id', 'state', 'country', 'address', 'cp', 'phone', 'person'
+    ];
+
     protected $hidden = [
         'id_user',
         'created_at',

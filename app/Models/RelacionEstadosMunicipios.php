@@ -11,6 +11,18 @@ class RelacionEstadosMunicipios extends Model
 
     protected $table = 'relacion_estados_municipios';
 
+    public $timestamps = true;
+
+    protected $fillable = [
+        'id', 'id_estado', 'id_municipio'
+    ];
+
+    protected $hidden = [
+        'created_at',
+        'updated_at',
+        'deleted'
+    ];
+
     public static function relation(){
       return RelacionEstadosMunicipios::where([
                                       'relacion_estados_municipios.deleted' => Utils::VALUE_ACTIVED,

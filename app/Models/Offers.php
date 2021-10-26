@@ -11,6 +11,12 @@ class Offers extends Model
 
     protected $table = 'offers';
 
+    public $timestamps = true;
+
+    protected $fillable = [
+        'id', 'id_product', 'percentage'
+    ];
+
     protected $hidden = [
         'created_at',
         'updated_at',
