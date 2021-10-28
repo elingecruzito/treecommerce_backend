@@ -28,4 +28,15 @@ class BuysController extends Controller
       //En caso de no optener valores
       return Utils::fail();
     }
+
+    public function list(Request $request){
+      if ( $request->validate([ 'token' => ['required'] ])){ // Si el valor token es requerido
+        $data = Sales::list($request['token']); // Se ejecuta la consulta
+        if( $data != null){ // Si se obtienen valores
+          return Utils::success($data);
+        }
+      }
+      //En caso de no optener valores
+      return Utils::fail();
+    }
 }

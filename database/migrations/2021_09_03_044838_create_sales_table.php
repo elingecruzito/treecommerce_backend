@@ -18,6 +18,9 @@ class CreateSalesTable extends Migration
             $table->integer('id_user');
             $table->integer('id_status');
             $table->integer('id_direction');
+            $table->integer('id_product');
+            $table->integer('count');
+            $table->integer('cost');
             $table->integer('total');
             $table->timestamps();
             $table->integer('deleted');

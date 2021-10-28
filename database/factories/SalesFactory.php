@@ -13,9 +13,6 @@ class SalesFactory extends Factory
      * @var string
      */
     protected $model = Sales::class;
-
-    private static $index = 0;
-
     /**
      * Define the model's default state.
      *
@@ -26,15 +23,17 @@ class SalesFactory extends Factory
         return [
             //
             'id_user' => $this->faker->numberBetween(1, 20),
-            'id_status' => $this->faker->numberBetween(1, 20),
+            'id_status' => $this->faker->numberBetween(1, 5),
             'id_direction' => $this->faker->numberBetween(1, 20),
+            'id_product' => $this->faker->numberBetween(1, 100),
+            'count' => $this->faker->numberBetween(1, 50),
+            'cost' => function (array $attributes) {
+                return \App\Models\Products::where('id', $attributes['id_product'])
+                                ->first()->price;
+            },
             'total' => function (array $attributes) {
 
-                self::$index++;
-
-                return \App\Models\RelationSales::where('id_sale', self::$index)
-                              ->selectRaw('SUM((tree_relation_sales.cost) * (tree_relation_sales.count)) AS suma')
-                              ->first()->suma;
+                return $attributes['cost'] * $attributes['count'];
             },
             'created_at' => now()->subDays($this->faker->numberBetween(1, 30)),
             'updated_at' => now()->addDays($this->faker->numberBetween(1, 30)),
