@@ -141,4 +141,14 @@ class Products extends Model
       }
       return null;
     }
+
+    public static function product($token, $id_product){
+      if( User::getAuthenticateToken($token) ){ // Si el token es valido
+
+        return Products::getOriginalQuery()
+                        ->where('products.id', $id_product)
+                        ->first();
+      }
+      return null;
+    }
 }
