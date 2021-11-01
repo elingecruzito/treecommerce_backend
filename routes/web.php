@@ -22,6 +22,7 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::post('/home/launcher', [App\Http\Controllers\Backend\HomeController::class, 'launcher']);
 
 //---------------------------------------------------------------------------------------------------------------------
 

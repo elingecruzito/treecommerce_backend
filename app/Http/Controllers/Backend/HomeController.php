@@ -13,6 +13,19 @@ use App\Models\Galery;
 class HomeController extends Controller
 {
 
+    public function launcher(Request $request){
+      if ( $request->validate(['token' => ['required']]) ){ // Si el valor token es requerido
+        if($request['token'] == 'MqmaWWM7XxMdsd8V2y9srAu2gwbEyW5SrJz4PKqX2hWbvBDPMJqGg'){
+          $data = [
+            'token' => 'MqmaWWM7XxMdsd8V2y9srAu2gwbEyW5SrJz4PKqX2hWbvBDPMJqGg'
+          ];
+          return Utils::success($data);
+        }
+      }
+      //En caso de no optener valores
+      return Utils::fail();
+    }
+
     public function carrucel(){
 
       $items = [
