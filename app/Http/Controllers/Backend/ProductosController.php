@@ -39,4 +39,15 @@ class ProductosController extends Controller
       //En caso de no optener valores
       return Utils::fail();
     }
+
+    public function favoritesListProducts(Request $request){
+      if ( $request->validate([ 'token' => ['required'] ]) ){ // Si el valor token es requerido
+        $data = Products::favoritesListProducts($request['token']); // Se ejecuta la consulta
+        if( $data != null ){ // Si se obtienen valores
+          return Utils::success($data);
+        }
+      }
+      //En caso de no optener valores
+      return Utils::fail();
+    }
 }
