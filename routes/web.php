@@ -82,3 +82,7 @@ Route::post('/directions/list', [App\Http\Controllers\Backend\DirectionsControll
 
 Route::post('/buy/add', [App\Http\Controllers\Backend\BuysController::class, 'add']);
 Route::post('/buy/list', [App\Http\Controllers\Backend\BuysController::class, 'list']);
+
+//---------------------------------------------------------------------------------------------------------------------
+
+Route::post('/notifications/list', [App\Http\Controllers\Backend\NotificationsController::class, 'list']);
