@@ -35,13 +35,17 @@ class DatabaseSeeder extends Seeder
         \App\Models\Directions::factory()->count(999)->create();
         \App\Models\LastView::factory()->count(999)->create();
         \App\Models\Offers::factory()->count(20)->create();
-        \App\Models\Favorites::factory()->count(50)->create();
+        // \App\Models\Favorites::factory()->count(50)->create();
         \App\Models\Notifications::factory()->count(999)->create();
         /**
         * $this->call([
         *     CategoriesSeeder::class,
         * ]);
         */
+
+        $this->call([
+          FavoritesSeeder::class,
+        ]);
 
     }
 }

@@ -17,6 +17,7 @@ class CreateFavoritesTable extends Migration
             $table->id();
             $table->integer('id_user');
             $table->integer('id_product');
+            $table->integer('value');
             $table->timestamps();
             $table->integer('deleted');
         });
