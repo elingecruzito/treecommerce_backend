@@ -49,7 +49,9 @@ class Utils {
     }
   */
   public static function fail(){
+    $quries = \DB::getQueryLog();
     return [
+        // 'query' => $quries[count($quries) - 1]['query'],
         'code' => Codes::CODE_NOT_FOUND ,
         'message' => Codes::MESSAGE_NOT_FOUND,
     ];

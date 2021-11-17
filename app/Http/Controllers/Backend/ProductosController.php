@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\Models\Products;
+use App\Models\Favorites;
 use App\Models\Utils;
 
 class ProductosController extends Controller
@@ -43,6 +44,17 @@ class ProductosController extends Controller
     public function favoritesListProducts(Request $request){
       if ( $request->validate([ 'token' => ['required'] ]) ){ // Si el valor token es requerido
         $data = Products::favoritesListProducts($request['token']); // Se ejecuta la consulta
+        if( $data != null ){ // Si se obtienen valores
+          return Utils::success($data);
+        }
+      }
+      //En caso de no optener valores
+      return Utils::fail();
+    }
+
+    public function setFavorite(Request $request){
+      if ( $request->validate([ 'token' => ['required'], 'id_product' => ['required'], 'value' => ['required']]) ){ // Si el valor token es requerido
+        $data = Favorites::setFavorite($request['token'], $request['id_product'], $request['value']); // Se ejecuta la consulta
         if( $data != null ){ // Si se obtienen valores
           return Utils::success($data);
         }

@@ -58,6 +58,7 @@ Route::post('/search/search', [App\Http\Controllers\Backend\SearchController::cl
 Route::post('/products/product', [App\Http\Controllers\Backend\ProductosController::class, 'product']);
 Route::post('/products/provider', [App\Http\Controllers\Backend\ProductosController::class, 'productsByProvider']);
 Route::post('/products/favorites', [App\Http\Controllers\Backend\ProductosController::class, 'favoritesListProducts']);
+Route::post('/products/favorite', [App\Http\Controllers\Backend\ProductosController::class, 'setFavorite']);
 
 //---------------------------------------------------------------------------------------------------------------------
 

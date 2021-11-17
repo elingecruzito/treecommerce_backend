@@ -14,7 +14,7 @@ class Favorites extends Model
     public $timestamps = true;
 
     protected $fillable = [
-        'id', 'id_user', 'id_product'
+        'id', 'id_user', 'id_product','value'
     ];
 
     protected $hidden = [
@@ -22,4 +22,22 @@ class Favorites extends Model
         'updated_at',
         'deleted'
     ];
+
+    const VALUE_FAVORITE = 1;
+    const VALUE_NOT_FAVORITE = 0;
+
+    public static function setFavorite($token, $product, $value){
+      if( User::getAuthenticateToken($token) ){ // Si el token es valido
+
+        $dataUser = User::getDataByToken($token); //Se obtienen los datos del token
+
+        return Favorites::where([
+          'id_user' => $dataUser->id,
+          'id_product' => $product
+        ])->update([
+          'value' => $value
+        ]);
+
+      }
+    }
 }

@@ -60,7 +60,7 @@ class Products extends Model
                         $join->on('products.id', '=', 'valorations.id_product')
                         ->where('valorations.deleted', Utils::VALUE_ACTIVED);
                       })
-                      ->leftJoin('favorites', function ($join) {
+                      ->join('favorites', function ($join) {
                         $join->on('products.id', '=', 'favorites.id_product')
                         ->where('favorites.deleted', Utils::VALUE_ACTIVED);
                       })
@@ -73,10 +73,11 @@ class Products extends Model
                         'categories.category',
                         'products.id_category',
                         'providers.name AS provider',
+                        'favorites.value as favorite'
                       )
                       ->selectRaw('IF( AVG(tree_valorations.`starts`) is null, 0, AVG(tree_valorations.`starts`)) AS valoration')
                       ->selectRaw('COUNT(tree_valorations.id) AS count_valoration')
-                      ->selectRaw('IF( COUNT(tree_favorites.id) > 0, 1, 0) AS favorite')
+                      // ->selectRaw('IF( COUNT(tree_favorites.id) > 0, 1, 0) AS favorite')
                       ->selectRaw('IF( tree_offers.percentage is null, 0, tree_offers.percentage) AS percentage')
                       ->groupBy('products.id');
     }
@@ -155,44 +156,13 @@ class Products extends Model
     public static function favoritesListProducts($token){
       if( User::getAuthenticateToken($token) ){ // Si el token es valido
 
-        return Products::where([
-                          'products.deleted' => Utils::VALUE_ACTIVED,
-                          ['unity', '>', 0],
+        $dataUser = User::getDataByToken($token); //Se obtienen los datos del token
+
+        return Products::getOriginalQuery()
+                        ->where([
+                          'favorites.value' => Favorites::VALUE_FAVORITE,
+                          'favorites.id_user' => $dataUser->id
                         ])
-                        ->join('categories', function ($join) {
-                          $join->on('categories.id', '=', 'products.id_category');
-                        })
-                        ->join('providers', function ($join) {
-                          $join->on('products.id_provider', '=', 'providers.id');
-                        })
-                        ->leftJoin('offers', function ($join) {
-                          $join->on('offers.id_product', '=', 'products.id')
-                          ->where('offers.deleted', Utils::VALUE_ACTIVED)
-                          ->orderByRaw('offers.created_at DESC');
-                        })
-                        ->leftJoin('valorations', function ($join) {
-                          $join->on('products.id', '=', 'valorations.id_product')
-                          ->where('valorations.deleted', Utils::VALUE_ACTIVED);
-                        })
-                        ->join('favorites', function ($join) {
-                          $join->on('products.id', '=', 'favorites.id_product')
-                          ->where('favorites.deleted', Utils::VALUE_ACTIVED);
-                        })
-                        ->select(
-                          'products.id',
-                          'products.name',
-                          'products.price',
-                          'products.description',
-                          'products.unity',
-                          'categories.category',
-                          'products.id_category',
-                          'providers.name AS provider',
-                        )
-                        ->selectRaw('IF( AVG(tree_valorations.`starts`) is null, 0, AVG(tree_valorations.`starts`)) AS valoration')
-                        ->selectRaw('COUNT(tree_valorations.id) AS count_valoration')
-                        ->selectRaw('IF( COUNT(tree_favorites.id) > 0, 1, 0) AS favorite')
-                        ->selectRaw('IF( tree_offers.percentage is null, 0, tree_offers.percentage) AS percentage')
-                        ->groupBy('products.id')
                         ->get();
 
       }

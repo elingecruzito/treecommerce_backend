@@ -64,7 +64,7 @@ class LastView extends Model
                             $join->on('valorations.id_product', '=', 'last_views.id_product')
                             ->where('valorations.deleted', Utils::VALUE_ACTIVED);
                           })
-                          ->leftJoin('favorites', function ($join) {
+                          ->join('favorites', function ($join) {
                             $join->on('favorites.id_product', '=', 'last_views.id_product')
                             ->where('favorites.deleted', Utils::VALUE_ACTIVED);
                           })
@@ -77,10 +77,11 @@ class LastView extends Model
                             'categories.category',
                             'products.id_category',
                             'providers.name AS provider',
+                            'favorites.value as favorite'
                           )
                           ->selectRaw('IF( AVG(tree_valorations.`starts`) is null, 0, AVG(tree_valorations.`starts`)) AS valoration')
                           ->selectRaw('COUNT(tree_valorations.id) AS count_valoration')
-                          ->selectRaw('IF( COUNT(tree_favorites.id) > 0, 1, 0) AS favorite')
+                          // ->selectRaw('IF( COUNT(tree_favorites.id) > 0, 1, 0) AS favorite')
                           ->selectRaw('IF( tree_offers.percentage is null, 0, tree_offers.percentage) AS percentage')
                           ->orderByRaw('tree_last_views.created_at DESC');
     }
@@ -141,7 +142,7 @@ class LastView extends Model
         LastView::create([
           'id_user' => $dataUser->id,
           'id_product' => (int)$id,
-          'deleted' => 0
+          'deleted' => Utils::VALUE_ACTIVED
         ]);
 
         return LastView::getLast($token);

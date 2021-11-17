@@ -70,10 +70,11 @@ class Offers extends Model
                       'categories.category',
                       'products.id_category',
                       'providers.name AS provider',
+                      'favorites.value as favorite'
                     )
                     ->selectRaw('IF( AVG(tree_valorations.`starts`) is null, 0, AVG(tree_valorations.`starts`)) AS valoration')
                     ->selectRaw('COUNT(tree_valorations.id) AS count_valoration')
-                    ->selectRaw('IF( COUNT(tree_favorites.id) > 0, 1, 0) AS favorite')
+                    // ->selectRaw('IF( COUNT(tree_favorites.id) > 0, 1, 0) AS favorite')
                     ->selectRaw('IF( tree_offers.percentage is null, 0, tree_offers.percentage) AS percentage')
                     ->groupBy('offers.id_product');
     }
