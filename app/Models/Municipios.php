@@ -23,4 +23,25 @@ class Municipios extends Model
         'deleted'
     ];
 
+    public static function getCountry($token, $id_estado){
+
+      if( User::getAuthenticateToken($token) ){ // Si el token es valido
+        return RelacionEstadosMunicipios::where([
+                                          'relacion_estados_municipios.deleted' => Utils::VALUE_ACTIVED,
+                                          'relacion_estados_municipios.id_estado' => $id_estado
+                                        ])
+                                        ->join('municipios', function ($join) {
+                                          $join->on('municipios.id', '=', 'relacion_estados_municipios.id_municipio');
+                                        })
+                                        ->select(
+                                          'relacion_estados_municipios.id_municipio',
+                                          'municipios.municipio'
+                                        )
+                                        ->get();
+      }
+
+      return null;
+
+    }
+
 }

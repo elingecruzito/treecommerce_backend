@@ -62,5 +62,27 @@ class Directions extends Model
         ->get();
 
       }
+
+      return null;
+    }
+
+    public static function add($token, $state, $country, $address, $cp, $phone, $person){
+      if( User::getAuthenticateToken($token) ){ // Si el token es valido
+          $dataUser = User::getDataByToken($token); //Se obtienen los datos del token
+          $data = Directions::create([
+            'id_user' => $dataUser->id,
+            'state' => $state,
+            'country' => $country,
+            'address' => $address,
+            'cp' => $cp,
+            'phone' => $phone,
+            'person' => $person,
+            'deleted' => Utils::VALUE_ACTIVED
+          ]);
+
+          return $data;
+      }
+
+      return null;
     }
 }

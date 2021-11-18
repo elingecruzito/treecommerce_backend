@@ -22,4 +22,14 @@ class Estados extends Model
         'updated_at',
         'deleted'
     ];
+
+    public static function getStates($token){
+
+      if( User::getAuthenticateToken($token) ){ // Si el token es valido
+        return Estados::where('deleted', Utils::VALUE_ACTIVED)->get();
+      }
+
+      return null;
+
+    }
 }

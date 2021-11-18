@@ -78,6 +78,9 @@ Route::post('/galery/cover', [App\Http\Controllers\Backend\GaleryController::cla
 //---------------------------------------------------------------------------------------------------------------------
 
 Route::post('/directions/list', [App\Http\Controllers\Backend\DirectionsController::class, 'completeList']);
+Route::post('/directions/states', [App\Http\Controllers\Backend\DirectionsController::class, 'getStates']);
+Route::post('/directions/countrys', [App\Http\Controllers\Backend\DirectionsController::class, 'getCountry']);
+Route::post('/directions/add', [App\Http\Controllers\Backend\DirectionsController::class, 'add']);
 
 //---------------------------------------------------------------------------------------------------------------------
 
