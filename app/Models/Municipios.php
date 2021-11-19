@@ -34,7 +34,7 @@ class Municipios extends Model
                                           $join->on('municipios.id', '=', 'relacion_estados_municipios.id_municipio');
                                         })
                                         ->select(
-                                          'relacion_estados_municipios.id_municipio',
+                                          'municipios.id',
                                           'municipios.municipio'
                                         )
                                         ->get();

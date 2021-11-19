@@ -14,11 +14,10 @@ class Directions extends Model
     public $timestamps = true;
 
     protected $fillable = [
-        'id', 'state', 'country', 'address', 'cp', 'phone', 'person'
+        'id', 'state', 'country', 'address', 'cp', 'phone', 'person','id_user'
     ];
 
     protected $hidden = [
-        'id_user',
         'created_at',
         'updated_at',
         'deleted'
@@ -35,31 +34,38 @@ class Directions extends Model
         'person' => String
       }
     */
+    private static function getOriginalQuery(){
+      return Directions::where([
+          'directions.deleted' => Utils::VALUE_ACTIVED,
+      ])
+      ->join('estados', function ($join) {
+        $join->on('estados.id', '=', 'directions.state');
+      })
+      ->join('municipios', function ($join) {
+        $join->on('municipios.id', '=', 'directions.country');
+      })
+      ->select(
+        'directions.id',
+        'estados.estado AS state',
+        'municipios.municipio AS country',
+        'directions.address',
+        'directions.cp',
+        'directions.phone',
+        'directions.person'
+      );
+    }
+
     public static function getListDirections($token){
       if( User::getAuthenticateToken($token) ){ // Si el token es valido
 
         $dataUser = User::getDataByToken($token); //Se obtienen los datos del token
 
-        return Directions::where([
-            'directions.deleted' => Utils::VALUE_ACTIVED,
+        return Directions::getOriginalQuery()
+          ->where([
             'directions.id_user' => $dataUser->id
-        ])
-        ->join('estados', function ($join) {
-          $join->on('estados.id', '=', 'directions.state');
-        })
-        ->join('municipios', function ($join) {
-          $join->on('municipios.id', '=', 'directions.country');
-        })
-        ->select(
-          'directions.id',
-          'estados.estado AS state',
-          'municipios.municipio AS country',
-          'directions.address',
-          'directions.cp',
-          'directions.phone',
-          'directions.person'
-        )
-        ->get();
+          ])
+          ->orderByRaw('tree_directions.created_at DESC')
+          ->get();
 
       }
 
@@ -68,7 +74,9 @@ class Directions extends Model
 
     public static function add($token, $state, $country, $address, $cp, $phone, $person){
       if( User::getAuthenticateToken($token) ){ // Si el token es valido
+
           $dataUser = User::getDataByToken($token); //Se obtienen los datos del token
+
           $data = Directions::create([
             'id_user' => $dataUser->id,
             'state' => $state,
@@ -80,7 +88,11 @@ class Directions extends Model
             'deleted' => Utils::VALUE_ACTIVED
           ]);
 
-          return $data;
+          return Directions::getOriginalQuery()
+            ->where([
+                'directions.id' => $data->id
+            ])
+            ->first();
       }
 
       return null;
